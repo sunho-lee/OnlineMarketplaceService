@@ -1,16 +1,15 @@
 package com.project.smartstore.service;
 
 import static org.assertj.core.api.Assertions.assertThatNoException;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.project.onlinemarketplaceservice.service.UserServiceImpl;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,10 +20,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.util.ReflectionTestUtils;
-import com.project.smartstore.dto.UserDto;
-import com.project.smartstore.exception.DuplicatedIdException;
-import com.project.smartstore.mapper.UserMapper;
-import com.project.smartstore.utils.PasswordEncryptor;
+import com.project.onlinemarketplaceservice.dto.UserDto;
+import com.project.onlinemarketplaceservice.exception.DuplicatedIdException;
+import com.project.onlinemarketplaceservice.mapper.UserMapper;
+import com.project.onlinemarketplaceservice.utils.PasswordEncryptor;
 
 //@RunWith(MockitoJUnitRunner.class) : JUnit4에서 사용한다. 
 @ExtendWith(MockitoExtension.class) // Mock 테스트가 필요한 경우 써야하는 어노테이션이다. JUnit5에서 사용한다. 
