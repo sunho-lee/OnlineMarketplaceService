@@ -1,6 +1,6 @@
 # 프로젝트 소개
-누구나 입점할 수 있는 온라인 전자상거래 플랫폼의 백엔드를 개발하였다. (EX. 스마트스토어, 쿠팡, 아마존)
-F-LAB 멘토링을 통해 21년 2월부터 7월까지 2인 1팀으로 진행한 프로젝트를 포크하여 22년 1월 혼자서 리팩토링과 추가 개발을 추가로 진행하였다.
+* 누구나 입점할 수 있는 온라인 전자상거래 플랫폼의 백엔드를 개발하였다. (EX. 스마트스토어, 쿠팡, 아마존)
+* F-LAB 멘토링을 통해 21년 2월부터 7월까지 2인 1팀으로 진행한 프로젝트를 포크하여 22년 1월 혼자서 리팩토링과 추가 개발을 추가로 진행하였다.
 
 ### 프로젝트 개요
 * 판매자는 판매할 상품을 스토어에 올릴 수 있다.
@@ -17,7 +17,6 @@ F-LAB 멘토링을 통해 21년 2월부터 7월까지 2인 1팀으로 진행한 
 ### 협업
 * [깃 브랜치 전략](https://github.com/f-lab-edu/smart-store/wiki/%EA%B9%83-%EB%B8%8C%EB%9E%9C%EC%B9%98-%EC%A0%84%EB%9E%B5)
 * [커밋 메세지 규칙](https://github.com/f-lab-edu/smart-store/wiki/%EC%BB%A4%EB%B0%8B-%EB%A9%94%EC%84%B8%EC%A7%80-%EA%B7%9C%EC%B9%99)
-* [깃허브 프로젝트 칸반보드 규칙](https://github.com/f-lab-edu/smart-store/wiki/%EA%B9%83%ED%97%88%EB%B8%8C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%B9%B8%EB%B0%98%EB%B3%B4%EB%93%9C-%EA%B7%9C%EC%B9%99)
 * [코드 스타일 가이드](https://github.com/f-lab-edu/smart-store/wiki/%EC%BD%94%EB%93%9C-%EC%8A%A4%ED%83%80%EC%9D%BC-%EA%B0%80%EC%9D%B4%EB%93%9C)
 
 ### 유즈 케이스
@@ -39,5 +38,4 @@ F-LAB 멘토링을 통해 21년 2월부터 7월까지 2인 1팀으로 진행한 
 ![db 구조](https://user-images.githubusercontent.com/37571052/135104577-098a99c8-47eb-4915-8f76-421b41cf82de.png)
 
 ### 개발 이슈 포스팅
-* [isaac1102](https://github.com/f-lab-edu/smart-store/wiki/isaac1102%EC%9D%98-%EA%B0%9C%EB%B0%9C-%EC%9D%B4%EC%8A%88-%ED%8F%AC%EC%8A%A4%ED%8C%85)
 * [sunho-lee](https://github.com/f-lab-edu/smart-store/wiki/sunho-lee%EC%9D%98-%EA%B0%9C%EB%B0%9C-%EC%9D%B4%EC%8A%88-%ED%8F%AC%EC%8A%A4%ED%8C%85)
