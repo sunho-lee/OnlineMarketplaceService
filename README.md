@@ -25,11 +25,18 @@ F-LAB 멘토링을 통해 21년 2월부터 7월까지 2인 1팀으로 진행한 
 * [판매자 유즈 케이스](https://github.com/f-lab-edu/smart-store/wiki/%ED%8C%90%EB%A7%A4%EC%9E%90-%EC%9C%A0%EC%A6%88-%EC%BC%80%EC%9D%B4%EC%8A%A4)
 * [구매자 유즈 케이스](https://github.com/f-lab-edu/smart-store/wiki/%EA%B5%AC%EB%A7%A4%EC%9E%90-%EC%9C%A0%EC%A6%88-%EC%BC%80%EC%9D%B4%EC%8A%A4)
 
+### 프로젝트 전체 구성도
+![프로젝트 인프라 drawio](https://user-images.githubusercontent.com/27765412/137734655-6fb67fe0-aa8d-48d5-a8d4-7132f74bd990.png)
+
+
+### 사용한 기술스택
+![Screenshot_4](https://user-images.githubusercontent.com/37571052/135284312-3848d02f-9101-4020-96e7-c2a33945cfab.png)
+
 ### 화면 프로토 타입
 작업중
 
 ### 데이터베이스 구조
-작업중
+![db 구조](https://user-images.githubusercontent.com/37571052/135104577-098a99c8-47eb-4915-8f76-421b41cf82de.png)
 
 ### 개발 이슈 포스팅
 * [isaac1102](https://github.com/f-lab-edu/smart-store/wiki/isaac1102%EC%9D%98-%EA%B0%9C%EB%B0%9C-%EC%9D%B4%EC%8A%88-%ED%8F%AC%EC%8A%A4%ED%8C%85)
