@@ -1,6 +1,6 @@
 # 프로젝트 소개
 * 누구나 입점할 수 있는 온라인 전자상거래 플랫폼의 백엔드를 개발하였다. (EX. 스마트스토어, 쿠팡, 아마존)
-* F-LAB 멘토링을 통해 21년 2월부터 7월까지 2인 1팀으로 진행한 프로젝트를 포크하여 22년 1월 혼자서 리팩토링과 추가 개발을 추가로 진행하였다.
+* F-LAB 멘토링을 통해 21년 2월부터 7월까지 2인 1팀으로 진행한 프로젝트를 포크하여 22년 1월부터 혼자서 리팩토링과 추가 개발을 하였다.
 
 ### 프로젝트 개요
 * 판매자는 판매할 상품을 스토어에 올릴 수 있다.
@@ -35,7 +35,8 @@
 작업중
 
 ### 데이터베이스 구조
-![db 구조](https://user-images.githubusercontent.com/37571052/135104577-098a99c8-47eb-4915-8f76-421b41cf82de.png)
+![DB구조](https://user-images.githubusercontent.com/27765412/148717482-0a05cd9b-a97b-45fb-b7ad-ca95db4b5969.JPG)
+
 
 ### 개발 이슈 포스팅
 * [sunho-lee](https://github.com/f-lab-edu/smart-store/wiki/sunho-lee%EC%9D%98-%EA%B0%9C%EB%B0%9C-%EC%9D%B4%EC%8A%88-%ED%8F%AC%EC%8A%A4%ED%8C%85)
