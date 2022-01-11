@@ -12,7 +12,7 @@
 
 ## 개발 포스팅
 * [대용량 트래픽에도 끄떡없는 서버 확장 방법](https://betterdev.tistory.com/6)
-* [분산 서버에 부하를 고르게 분산하는 방법]()
+* [분산 서버에 부하를 고르게 분산하는 방법](https://betterdev.tistory.com/7)
 * [오픈 마켓 서비스 데이터베이스 스키마 설계하기](https://betterdev.tistory.com/14)
 
 
