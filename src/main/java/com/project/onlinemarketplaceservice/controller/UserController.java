@@ -1,9 +1,9 @@
 package com.project.onlinemarketplaceservice.controller;
 
-import com.project.onlinemarketplaceservice.service.UserService;
 import com.project.onlinemarketplaceservice.annotation.LoginCheck;
 import com.project.onlinemarketplaceservice.dto.UserDto;
 import com.project.onlinemarketplaceservice.service.LoginService;
+import com.project.onlinemarketplaceservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
