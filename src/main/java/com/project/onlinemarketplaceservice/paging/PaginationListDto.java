@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaginationListDto {
 
-  private int totalRecordCount;
+    private int totalRecordCount;
 
-  private List<?> paginationListData;
+    private List<?> paginationListData;
 
 }

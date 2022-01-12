@@ -10,15 +10,15 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-  void insertUser(UserDto user);
+    void insertUser(UserDto user);
 
-  boolean isUsingId(String id);
+    boolean isUsingId(String id);
 
-  UserDto findUserByIdAndPassword(UserDto user);
+    UserDto findUserByIdAndPassword(UserDto user);
 
-  UserDto findUserById(String userId);
+    UserDto findUserById(String userId);
 
-  void updateUser(UserDto user);
+    void updateUser(UserDto user);
 
-  void deleteUser(UserDto user);
+    void deleteUser(UserDto user);
 }

@@ -7,15 +7,15 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface StoreMapper {
 
-  void createStore(StoreDto store);
+    void createStore(StoreDto store);
 
-  List<StoreDto> selectStoreList(String ownerId);
+    List<StoreDto> selectStoreList(String ownerId);
 
-  int countStores(String ownerId);
+    int countStores(String ownerId);
 
-  StoreDto selectStore(String ownerId, String storeId);
+    StoreDto selectStore(String ownerId, String storeId);
 
-  void updateStore(StoreDto store);
+    void updateStore(StoreDto store);
 
-  void deleteStore(String ownerId, String storeId);
+    void deleteStore(String ownerId, String storeId);
 }

@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductDto {
 
-  private String name;
-  private String category;
-  private String tag;
-  private int price;
-  private int amount;
-  private String mainImage;
-  private String detailImage;
-  private String description;
-  private String registerDate;
-  private String storeId;
+    private String name;
+    private String category;
+    private String tag;
+    private int price;
+    private int amount;
+    private String mainImage;
+    private String detailImage;
+    private String description;
+    private String registerDate;
+    private String storeId;
 
 }

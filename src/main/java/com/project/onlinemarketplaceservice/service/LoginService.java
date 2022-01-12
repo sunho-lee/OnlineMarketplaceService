@@ -4,11 +4,11 @@ import com.project.onlinemarketplaceservice.dto.UserDto;
 
 public interface LoginService {
 
-  void login(UserDto user);
+    void login(UserDto user);
 
-  void logout();
+    void logout();
 
-  String getLoginId();
+    String getLoginId();
 
-  UserDto getLoginUserInfo();
+    UserDto getLoginUserInfo();
 }

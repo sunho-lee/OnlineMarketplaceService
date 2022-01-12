@@ -23,37 +23,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ProductController {
 
-  private final ProductService productService;
+    private final ProductService productService;
 
-  @PostMapping
-  public void addProductInStore(@RequestBody ProductDto productDto) {
-    productService.addProductInStore(productDto);
-  }
+    @PostMapping
+    public void addProductInStore(@RequestBody ProductDto productDto) {
+        productService.addProductInStore(productDto);
+    }
 
-  @GetMapping
-  public PaginationListDto getProductList(
-      @RequestParam(value = "cateId", required = false) Integer categoryId,
-      @RequestParam(value = "keyword", required = false) String searchKeyword,
-      @RequestParam(value = "sort", defaultValue = "date") String sort,
-      @RequestParam(value = "pagingIndex", defaultValue = "1") Integer pagingIndex,
-      @RequestParam(value = "pagingSize", defaultValue = "40") Integer pagingSize) {
-    return productService.getProductList(new SearchConditionDto(categoryId, searchKeyword, sort,
-        new PagingOffsetDto(pagingIndex, pagingSize)));
-  }
+    @GetMapping
+    public PaginationListDto getProductList(
+            @RequestParam(value = "cateId", required = false) Integer categoryId,
+            @RequestParam(value = "keyword", required = false) String searchKeyword,
+            @RequestParam(value = "sort", defaultValue = "date") String sort,
+            @RequestParam(value = "pagingIndex", defaultValue = "1") Integer pagingIndex,
+            @RequestParam(value = "pagingSize", defaultValue = "40") Integer pagingSize) {
+        return productService.getProductList(new SearchConditionDto(categoryId, searchKeyword, sort,
+                new PagingOffsetDto(pagingIndex, pagingSize)));
+    }
 
-  @GetMapping("/{productId}")
-  public ProductDto getProduct(@PathVariable("productId") int productId) {
-    return productService.getProduct(productId);
-  }
+    @GetMapping("/{productId}")
+    public ProductDto getProduct(@PathVariable("productId") int productId) {
+        return productService.getProduct(productId);
+    }
 
-  @PutMapping("/{productId}")
-  public void modifyProduct(@PathVariable int productId, @RequestBody ProductDto productDto) {
-    productService.modifyProduct(productId, productDto);
-  }
+    @PutMapping("/{productId}")
+    public void modifyProduct(@PathVariable int productId, @RequestBody ProductDto productDto) {
+        productService.modifyProduct(productId, productDto);
+    }
 
-  @CacheEvict(value = CacheNameConstants.PRODUCT, key = "#productId")
-  @DeleteMapping("/{storeId}/{productId}")
-  public void deleteProduct(@PathVariable int storeId, @PathVariable int productId) {
-    productService.deleteProduct(storeId, productId);
-  }
+    @CacheEvict(value = CacheNameConstants.PRODUCT, key = "#productId")
+    @DeleteMapping("/{storeId}/{productId}")
+    public void deleteProduct(@PathVariable int storeId, @PathVariable int productId) {
+        productService.deleteProduct(storeId, productId);
+    }
 }

@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SearchConditionDto {
 
-  private Integer categoryId;
+    private Integer categoryId;
 
-  private String searchKeyword;
+    private String searchKeyword;
 
-  private String sort;
+    private String sort;
 
-  private PagingOffsetDto pagingOffsetDto;
+    private PagingOffsetDto pagingOffsetDto;
 }

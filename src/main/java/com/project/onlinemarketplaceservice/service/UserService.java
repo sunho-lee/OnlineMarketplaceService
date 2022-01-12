@@ -6,16 +6,16 @@ import java.util.Optional;
 
 public interface UserService {
 
-  void joinUser(UserDto user);
+    void joinUser(UserDto user);
 
-  boolean isUsingId(String userId);
+    boolean isUsingId(String userId);
 
-  Optional<UserDto> findUserByIdAndPassword(UserDto user);
+    Optional<UserDto> findUserByIdAndPassword(UserDto user);
 
-  UserDto findUserById(String userId);
+    UserDto findUserById(String userId);
 
-  void updateUser(UserDto user);
+    void updateUser(UserDto user);
 
-  void deleteUser(UserDto user);
+    void deleteUser(UserDto user);
 
 }

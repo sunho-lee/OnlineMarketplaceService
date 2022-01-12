@@ -15,22 +15,22 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan(basePackages = "com.project.onlinemarketplaceservice.mapper")
 public class MyBatisConfig {
 
-  @Autowired
-  private ApplicationContext applicationContext;
+    @Autowired
+    private ApplicationContext applicationContext;
 
-  @Bean
-  public SqlSessionFactory sqlSessionFactory(@Qualifier(value = "proxyDataSource" )
-                                             DataSource dataSource) throws Exception {
-    SqlSessionFactoryBean sqlSessionFactoryBean =  new SqlSessionFactoryBean();
-    sqlSessionFactoryBean.setDataSource(dataSource);
-    sqlSessionFactoryBean.setTypeAliasesPackage("com.project.onlinemarketplaceservice.dto");
-    sqlSessionFactoryBean.setMapperLocations (
-        applicationContext.getResources("classpath:/mappers/**/*.xml"));
-    return sqlSessionFactoryBean.getObject();
-  }
+    @Bean
+    public SqlSessionFactory sqlSessionFactory(@Qualifier(value = "proxyDataSource")
+            DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.project.onlinemarketplaceservice.dto");
+        sqlSessionFactoryBean.setMapperLocations(
+                applicationContext.getResources("classpath:/mappers/**/*.xml"));
+        return sqlSessionFactoryBean.getObject();
+    }
 
-  @Bean
-  public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
-    return new SqlSessionTemplate(sqlSessionFactory);
-  }
+    @Bean
+    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
 }

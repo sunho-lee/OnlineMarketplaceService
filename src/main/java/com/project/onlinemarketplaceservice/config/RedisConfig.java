@@ -1,7 +1,6 @@
 package com.project.onlinemarketplaceservice.config;
 
 
-
 import com.project.onlinemarketplaceservice.constants.CacheNameConstants;
 import java.time.Duration;
 import java.util.HashMap;
@@ -33,60 +32,61 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableRedisHttpSession
 public class RedisConfig {
 
-  @Value("${redis.host}")
-  private String host;
+    @Value("${redis.host}")
+    private String host;
 
-  @Value("${redis.port}")
-  private int port;
+    @Value("${redis.port}")
+    private int port;
 
 
-  /**
-   * Lettuce는 Netty기반의 오픈소스 커넥터이며 Redis의 클라이언트 라이브러리입니다. 기본적으로 LettuceConnectionFactory에 의해 생성된 모든
-   * LettuceConnection 인스턴스는 non-blocking / non-transaction / thread-safe한 연결을 공유합니다.
-   */
-  @Bean
-  public LettuceConnectionFactory redisConnectionFactory() {
-    return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
-  }
+    /**
+     * Lettuce는 Netty기반의 오픈소스 커넥터이며 Redis의 클라이언트 라이브러리입니다. 기본적으로 LettuceConnectionFactory에 의해 생성된 모든
+     * LettuceConnection 인스턴스는 non-blocking / non-transaction / thread-safe한 연결을 공유합니다.
+     */
+    @Bean
+    public LettuceConnectionFactory redisConnectionFactory() {
+        return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
+    }
 
-  /**
-   * RedisTemplate - RedisTemplate은 주어진 객체와 Redis 저장소 간에 직렬화/역직렬화를 수앵합니다. 기본적으로
-   * JdkSerializationRedisSerializerf를 통해 자바 직렬화를 사용하지만 , 문자열 위주의 작업의 경우 StringRedisTemplate을 사용합니다.
-   * RedisTemplate 클래스는 RedisCallback 인터페이스의 구현이나, Redis connection을 검색하고 닫는 호출 코드를  신경을 쓸 필요가 없도록
-   * RedisConnection 처리를 제공합니다. thread-safe합니다.
-   */
-  @Bean
-  public RedisTemplate<String, Object> redisTemplate() {
+    /**
+     * RedisTemplate - RedisTemplate은 주어진 객체와 Redis 저장소 간에 직렬화/역직렬화를 수앵합니다. 기본적으로
+     * JdkSerializationRedisSerializerf를 통해 자바 직렬화를 사용하지만 , 문자열 위주의 작업의 경우 StringRedisTemplate을
+     * 사용합니다. RedisTemplate 클래스는 RedisCallback 인터페이스의 구현이나, Redis connection을 검색하고 닫는 호출 코드를  신경을 쓸
+     * 필요가 없도록 RedisConnection 처리를 제공합니다. thread-safe합니다.
+     */
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate() {
 
-    RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-    redisTemplate.setConnectionFactory(redisConnectionFactory());
-    redisTemplate.setKeySerializer(new StringRedisSerializer());
-    redisTemplate.setValueSerializer(new StringRedisSerializer());
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
 
-    return redisTemplate;
-  }
+        return redisTemplate;
+    }
 
-  @Bean
-  public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
-    Map<String, RedisCacheConfiguration> cacheConfigurationMap = new HashMap<>();
-    cacheConfigurationMap.put(CacheNameConstants.PRODUCT,
-        defaultRedisCacheConfiguration().entryTtl(Duration.ofSeconds(600)));
+    @Bean
+    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+        Map<String, RedisCacheConfiguration> cacheConfigurationMap = new HashMap<>();
+        cacheConfigurationMap.put(CacheNameConstants.PRODUCT,
+                defaultRedisCacheConfiguration().entryTtl(Duration.ofSeconds(600)));
 
-    return RedisCacheManager.RedisCacheManagerBuilder
-        .fromConnectionFactory(redisConnectionFactory)
-        .withInitialCacheConfigurations(cacheConfigurationMap)
-        .cacheDefaults(defaultRedisCacheConfiguration())
-        .build();
-  }
+        return RedisCacheManager.RedisCacheManagerBuilder
+                .fromConnectionFactory(redisConnectionFactory)
+                .withInitialCacheConfigurations(cacheConfigurationMap)
+                .cacheDefaults(defaultRedisCacheConfiguration())
+                .build();
+    }
 
-  private RedisCacheConfiguration defaultRedisCacheConfiguration() {
-    return RedisCacheConfiguration.defaultCacheConfig()
-        .disableCachingNullValues()
-        .computePrefixWith(CacheKeyPrefix.simple())
-        .serializeKeysWith(
-            RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-        .serializeValuesWith(RedisSerializationContext.SerializationPair
-            .fromSerializer(new GenericJackson2JsonRedisSerializer()))
-        .entryTtl(Duration.ofSeconds(180));
-  }
+    private RedisCacheConfiguration defaultRedisCacheConfiguration() {
+        return RedisCacheConfiguration.defaultCacheConfig()
+                .disableCachingNullValues()
+                .computePrefixWith(CacheKeyPrefix.simple())
+                .serializeKeysWith(
+                        RedisSerializationContext.SerializationPair
+                                .fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair
+                        .fromSerializer(new GenericJackson2JsonRedisSerializer()))
+                .entryTtl(Duration.ofSeconds(180));
+    }
 }
