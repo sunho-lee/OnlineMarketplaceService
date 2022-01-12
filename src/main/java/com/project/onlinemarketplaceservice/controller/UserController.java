@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
 /**
  * @RestController : @Controller와 @ResponseBody가 합쳐진 기능의 어노테이션입니다.
  *     또한 @RequestMapping 메서드가 @ResponseBody를 수행한다는 의미도 있습니다.
@@ -38,35 +37,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-  private final UserService userService;
-  private final LoginService sessionLoginService;
+    private final UserService userService;
+    private final LoginService sessionLoginService;
 
-  @PostMapping("/join")
-  @ResponseStatus(HttpStatus.CREATED)
-  public void joinUser(@RequestBody UserDto user) {
-    userService.joinUser(user);
-  }
+    @PostMapping("/join")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void joinUser(@RequestBody UserDto user) {
+        userService.joinUser(user);
+    }
 
-  @PostMapping("/login")
-  public void login(@RequestBody UserDto user) {
-    sessionLoginService.login(user);
-  }
+    @PostMapping("/login")
+    public void login(@RequestBody UserDto user) {
+        sessionLoginService.login(user);
+    }
 
-  @LoginCheck
-  @PutMapping("/account")
-  public void updateUser(@RequestBody UserDto user) {
-    userService.updateUser(user);
-  }
+    @LoginCheck
+    @PutMapping("/account")
+    public void updateUser(@RequestBody UserDto user) {
+        userService.updateUser(user);
+    }
 
-  @LoginCheck
-  @DeleteMapping("/account")
-  public void deleteUser(@RequestBody UserDto user) {
-    userService.deleteUser(user);
-  }
+    @LoginCheck
+    @DeleteMapping("/account")
+    public void deleteUser(@RequestBody UserDto user) {
+        userService.deleteUser(user);
+    }
 
-  @LoginCheck
-  @GetMapping("/logout")
-  public void logout(@RequestBody UserDto user) {
-    sessionLoginService.logout();
-  }
+    @LoginCheck
+    @GetMapping("/logout")
+    public void logout(@RequestBody UserDto user) {
+        sessionLoginService.logout();
+    }
 }
