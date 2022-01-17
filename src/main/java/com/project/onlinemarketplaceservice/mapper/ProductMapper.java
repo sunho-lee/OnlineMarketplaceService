@@ -21,8 +21,8 @@ public interface ProductMapper {
 
     int selectProductListCount(SearchConditionDto searchConditionDto);
 
-    int updateProduct(@Param("productId") int productId,
+    void updateProduct(@Param("productId") int productId,
             @Param("UpdateProductDto") UpdateProductDto productDto);
 
-    void deleteProduct(@Param("storeId") int storeId, @Param("productId") int productId);
+    void deleteProduct(@Param("productId") int productId);
 }

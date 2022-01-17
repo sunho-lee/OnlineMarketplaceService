@@ -55,8 +55,8 @@ public class ProductController {
     }
 
     @CacheEvict(value = CacheNameConstants.PRODUCT, key = "#productId")
-    @DeleteMapping("/{storeId}/{productId}")
-    public void deleteProduct(@PathVariable int storeId, @PathVariable int productId) {
-        productService.deleteProduct(storeId, productId);
+    @DeleteMapping("/{productId}")
+    public void deleteProduct(@PathVariable int productId) {
+        productService.deleteProduct(productId);
     }
 }
