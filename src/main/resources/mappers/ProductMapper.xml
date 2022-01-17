@@ -4,12 +4,12 @@
 
 <mapper namespace="com.project.onlinemarketplaceservice.mapper.ProductMapper">
 
-  <insert id="insertProduct" parameterType="ProductDto">
-    INSERT INTO product (product_name, category_id, tag, price, amount, main_img,
-                         detail_img, description, store_id)
-    VALUES (#{name}, #{category}, #{tag}, #{price}, #{amount}, #{mainImage}, #{detailImage},
-            #{description},
-            #{storeId});
+  <insert id="insertProduct" parameterType="InsertProductDto">
+    INSERT INTO product (seller_id, title, price, shipping_fee, category_id, amount, description,
+                         main_image, detailed_image1, detailed_image2, detailed_image3)
+    VALUES (#{baseProductDto.sellerId}, #{baseProductDto.title}, #{baseProductDto.price}, #{baseProductDto.shippingFee},
+            #{baseProductDto.categoryId}, #{baseProductDto.amount}, #{baseProductDto.description}, #{baseProductDto.mainImage},
+            #{detailedImage1}, #{detailedImage2}, #{detailedImage3});
   </insert>
 
   <select id="selectProductList" parameterType="SearchConditionDto" resultType="ProductListDto">
@@ -53,7 +53,7 @@
     </where>
   </select>
 
-  <select id="selectProduct" parameterType="int" resultType="ProductDto">
+  <select id="selectProduct" parameterType="int" resultType="BaseProductDto">
     SELECT product_name AS name,
            category_id  AS category,
            tag,
@@ -69,7 +69,7 @@
   </select>
 
   <update id="updateProduct">
-    UPDATE smartstore_db.product
+    UPDATE marketplace.product
     SET product_name = #{ProductDto.name},
         category_id  = #{ProductDto.category},
         tag          = #{ProductDto.tag},
@@ -79,14 +79,14 @@
         detail_img   = #{ProductDto.detailImage},
         description  = #{ProductDto.description}
     WHERE product_id = #{productId}
-    AND store_id = #{ProductDto.storeId};
+      AND store_id = #{ProductDto.storeId};
   </update>
 
   <delete id="deleteProduct">
     DELETE
     from smartstore_db.product
     WHERE product_id = #{productId}
-    AND store_id = #{storeId};
+      AND store_id = #{storeId};
   </delete>
 
 </mapper>

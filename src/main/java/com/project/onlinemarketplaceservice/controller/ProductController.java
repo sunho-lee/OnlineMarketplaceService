@@ -1,8 +1,9 @@
 package com.project.onlinemarketplaceservice.controller;
 
 import com.project.onlinemarketplaceservice.constants.CacheNameConstants;
+import com.project.onlinemarketplaceservice.dto.BaseProductDto;
+import com.project.onlinemarketplaceservice.dto.InsertProductDto;
 import com.project.onlinemarketplaceservice.dto.PagingOffsetDto;
-import com.project.onlinemarketplaceservice.dto.ProductDto;
 import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
 import com.project.onlinemarketplaceservice.paging.PaginationListDto;
 import com.project.onlinemarketplaceservice.service.ProductService;
@@ -26,7 +27,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public void addProductInStore(@RequestBody ProductDto productDto) {
+    public void addProductInStore(@RequestBody InsertProductDto productDto) {
         productService.addProductInStore(productDto);
     }
 
@@ -42,12 +43,12 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ProductDto getProduct(@PathVariable("productId") int productId) {
+    public BaseProductDto getProduct(@PathVariable("productId") int productId) {
         return productService.getProduct(productId);
     }
 
     @PutMapping("/{productId}")
-    public void modifyProduct(@PathVariable int productId, @RequestBody ProductDto productDto) {
+    public void modifyProduct(@PathVariable int productId, @RequestBody BaseProductDto productDto) {
         productService.modifyProduct(productId, productDto);
     }
 
