@@ -1,7 +1,6 @@
 package com.project.onlinemarketplaceservice.controller;
 
 import com.project.onlinemarketplaceservice.constants.CacheNameConstants;
-import com.project.onlinemarketplaceservice.dto.BaseProductDto;
 import com.project.onlinemarketplaceservice.dto.InsertProductDto;
 import com.project.onlinemarketplaceservice.dto.PagingOffsetDto;
 import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
