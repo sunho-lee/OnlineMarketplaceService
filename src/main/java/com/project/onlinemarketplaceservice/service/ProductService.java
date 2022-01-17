@@ -6,6 +6,7 @@ import com.project.onlinemarketplaceservice.dto.InsertProductDto;
 import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
 import com.project.onlinemarketplaceservice.dto.ProductListDto;
 import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
+import com.project.onlinemarketplaceservice.dto.UpdateProductDto;
 import com.project.onlinemarketplaceservice.mapper.ProductMapper;
 import com.project.onlinemarketplaceservice.paging.PaginationListDto;
 import java.util.List;
@@ -40,8 +41,8 @@ public class ProductService {
         return productMapper.selectProductListCount(searchConditionDto);
     }
 
-    @CachePut(value = CacheNameConstants.PRODUCT, key = "#productId")
-    public void modifyProduct(int productId, BaseProductDto productDto) {
+    @CachePut(value = CacheNameConstants.PRODUCT, key = "#productId", unless = "#result == null")
+    public void modifyProduct(int productId, UpdateProductDto productDto) {
         productMapper.updateProduct(productId, productDto);
     }
 

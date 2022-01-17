@@ -6,6 +6,7 @@ import com.project.onlinemarketplaceservice.dto.InsertProductDto;
 import com.project.onlinemarketplaceservice.dto.PagingOffsetDto;
 import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
 import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
+import com.project.onlinemarketplaceservice.dto.UpdateProductDto;
 import com.project.onlinemarketplaceservice.paging.PaginationListDto;
 import com.project.onlinemarketplaceservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +50,8 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
-    public void modifyProduct(@PathVariable int productId, @RequestBody BaseProductDto productDto) {
+    public void modifyProduct(@PathVariable int productId,
+            @RequestBody UpdateProductDto productDto) {
         productService.modifyProduct(productId, productDto);
     }
 
