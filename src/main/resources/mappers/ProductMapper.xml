@@ -8,7 +8,7 @@
     INSERT INTO product (seller_id, title, price, shipping_fee, category_id, amount, description,
                          main_image, detailed_image1, detailed_image2, detailed_image3)
     VALUES (#{baseProductDto.sellerId}, #{baseProductDto.title}, #{baseProductDto.price}, #{baseProductDto.shippingFee},
-            #{baseProductDto.categoryId}, #{baseProductDto.amount}, #{baseProductDto.description}, #{baseProductDto.mainImage},
+            #{baseProductDto.categoryId}, #{baseProductDto.amount}, #{description}, #{baseProductDto.mainImage},
             #{detailedImage1}, #{detailedImage2}, #{detailedImage3});
   </insert>
 
@@ -53,19 +53,40 @@
     </where>
   </select>
 
-  <select id="selectProduct" parameterType="int" resultType="BaseProductDto">
-    SELECT product_name AS name,
-           category_id  AS category,
-           tag,
+  <resultMap id="productDetail" type="ProductDetailDto">
+    <id property="productId" column="id"/>
+    <id property="description" column="description"/>
+    <id property="detailedImage1" column="detailed_image1"/>
+    <id property="detailedImage2" column="detailed_image2"/>
+    <id property="detailedImage3" column="detailed_image3"/>
+    <id property="publishedAt" column="publishedAt"/>
+    <association property="baseProductDto" javaType="BaseProductDto">
+      <result property="sellerId" column="seller_id"/>
+      <result property="title" column="title"/>
+      <result property="price" column="price"/>
+      <result property="shippingFee" column="shipping_fee"/>
+      <result property="categoryId" column="category_id"/>
+      <result property="amount" column="amount"/>
+      <result property="mainImage" column="main_image"/>
+    </association>
+  </resultMap>
+    
+  <select id="selectProduct" parameterType="int" resultMap="productDetail">
+    SELECT id,
+           seller_id,
+           title,
            price,
+           shipping_fee,
+           category_id,
            amount,
-           main_img     AS mainImage,
-           detail_img   AS detailImage,
            description,
-           reg_dt       AS registerDate,
-           store_id     AS storeId
-    FROM smartstore_db.product
-    WHERE product_id = #{productId};
+           main_image,
+           detailed_image1,
+           detailed_image2,
+           detailed_image3,
+           publishedAt
+    FROM marketplace.product
+    WHERE id = #{productId};
   </select>
 
   <update id="updateProduct">

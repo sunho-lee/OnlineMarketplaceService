@@ -3,6 +3,7 @@ package com.project.onlinemarketplaceservice.service;
 import com.project.onlinemarketplaceservice.constants.CacheNameConstants;
 import com.project.onlinemarketplaceservice.dto.BaseProductDto;
 import com.project.onlinemarketplaceservice.dto.InsertProductDto;
+import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
 import com.project.onlinemarketplaceservice.dto.ProductListDto;
 import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
 import com.project.onlinemarketplaceservice.mapper.ProductMapper;
@@ -31,7 +32,7 @@ public class ProductService {
     }
 
     @Cacheable(value = CacheNameConstants.PRODUCT, key = "#productId")
-    public BaseProductDto getProduct(int productId) {
+    public ProductDetailDto getProduct(int productId) {
         return productMapper.selectProduct(productId);
     }
 

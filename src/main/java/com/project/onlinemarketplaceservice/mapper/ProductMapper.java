@@ -2,6 +2,7 @@ package com.project.onlinemarketplaceservice.mapper;
 
 import com.project.onlinemarketplaceservice.dto.BaseProductDto;
 import com.project.onlinemarketplaceservice.dto.InsertProductDto;
+import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
 import com.project.onlinemarketplaceservice.dto.ProductListDto;
 import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
 import java.util.List;
@@ -15,7 +16,7 @@ public interface ProductMapper {
 
     List<ProductListDto> selectProductList(SearchConditionDto searchConditionDto);
 
-    BaseProductDto selectProduct(int productId);
+    ProductDetailDto selectProduct(int productId);
 
     int selectProductListCount(SearchConditionDto searchConditionDto);
 

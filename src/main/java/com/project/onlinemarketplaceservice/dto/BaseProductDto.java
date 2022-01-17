@@ -17,7 +17,6 @@ public class BaseProductDto {
     private Integer shippingFee;
     private String categoryId;
     private Integer amount;
-    private String description;
     private String mainImage;
 
 }

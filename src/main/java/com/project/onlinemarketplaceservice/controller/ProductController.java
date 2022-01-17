@@ -4,6 +4,7 @@ import com.project.onlinemarketplaceservice.constants.CacheNameConstants;
 import com.project.onlinemarketplaceservice.dto.BaseProductDto;
 import com.project.onlinemarketplaceservice.dto.InsertProductDto;
 import com.project.onlinemarketplaceservice.dto.PagingOffsetDto;
+import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
 import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
 import com.project.onlinemarketplaceservice.paging.PaginationListDto;
 import com.project.onlinemarketplaceservice.service.ProductService;
@@ -43,7 +44,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public BaseProductDto getProduct(@PathVariable("productId") int productId) {
+    public ProductDetailDto getProduct(@PathVariable("productId") int productId) {
         return productService.getProduct(productId);
     }
 
