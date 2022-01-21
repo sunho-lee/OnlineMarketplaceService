@@ -87,8 +87,8 @@
            detailed_image2,
            detailed_image3,
            publishedAt
-    FROM marketplace.product
-    WHERE id = #{productId};
+    FROM marketplace.product p
+    WHERE p.id = #{productId};
   </select>
 
   <update id="updateProduct">
