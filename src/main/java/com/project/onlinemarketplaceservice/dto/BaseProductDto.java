@@ -15,7 +15,7 @@ public class BaseProductDto {
     private String title;
     private Integer price;
     private Integer shippingFee;
-    private String categoryId;
+    private String categoryName;
     private Integer amount;
     private String mainImage;
 
