@@ -74,21 +74,22 @@
   </resultMap>
 
   <select id="selectProduct" parameterType="int" resultMap="productDetail">
-    SELECT id,
-           seller_id,
-           title,
-           price,
-           shipping_fee,
-           category_id,
-           amount,
-           description,
-           main_image,
-           detailed_image1,
-           detailed_image2,
-           detailed_image3,
-           publishedAt
-    FROM marketplace.product
-    WHERE id = #{productId};
+    SELECT p.id,
+           p.seller_id,
+           p.title,
+           p.price,
+           p.shipping_fee,
+           c.name,
+           p.amount,
+           p.description,
+           p.main_image,
+           p.detailed_image1,
+           p.detailed_image2,
+           p.detailed_image3,
+           p.publishedAt
+    FROM marketplace.product p
+           JOIN category c ON p.category_id = c.id
+    WHERE p.id = #{productId};
   </select>
 
   <update id="updateProduct">
