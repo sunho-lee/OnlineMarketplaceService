@@ -2,11 +2,10 @@ package com.project.onlinemarketplaceservice.controller;
 
 import com.project.onlinemarketplaceservice.constants.CacheNameConstants;
 import com.project.onlinemarketplaceservice.dto.InsertProductDto;
-import com.project.onlinemarketplaceservice.dto.PagingOffsetDto;
 import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
-import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
 import com.project.onlinemarketplaceservice.dto.UpdateProductDto;
-import com.project.onlinemarketplaceservice.paging.PaginationListDto;
+import com.project.onlinemarketplaceservice.pagination.PaginationProductListDto;
+import com.project.onlinemarketplaceservice.pagination.ProductSearchConditionDto;
 import com.project.onlinemarketplaceservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -33,14 +32,15 @@ public class ProductController {
     }
 
     @GetMapping
-    public PaginationListDto getProductList(
+    public PaginationProductListDto getProductList(
             @RequestParam(value = "cateId", required = false) Integer categoryId,
             @RequestParam(value = "keyword", required = false) String searchKeyword,
             @RequestParam(value = "sort", defaultValue = "date") String sort,
             @RequestParam(value = "pagingIndex", defaultValue = "1") Integer pagingIndex,
             @RequestParam(value = "pagingSize", defaultValue = "40") Integer pagingSize) {
-        return productService.getProductList(new SearchConditionDto(categoryId, searchKeyword, sort,
-                new PagingOffsetDto(pagingIndex, pagingSize)));
+        return productService.getProductList(
+                new ProductSearchConditionDto(categoryId, searchKeyword, sort, pagingIndex,
+                        pagingSize));
     }
 
     @GetMapping("/{productId}")

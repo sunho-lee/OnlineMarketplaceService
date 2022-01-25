@@ -3,9 +3,8 @@ package com.project.onlinemarketplaceservice.mapper;
 import com.project.onlinemarketplaceservice.dto.BaseProductDto;
 import com.project.onlinemarketplaceservice.dto.InsertProductDto;
 import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
-import com.project.onlinemarketplaceservice.dto.ProductListDto;
-import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
 import com.project.onlinemarketplaceservice.dto.UpdateProductDto;
+import com.project.onlinemarketplaceservice.pagination.ProductSearchConditionDto;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,11 +14,11 @@ public interface ProductMapper {
 
     void insertProduct(InsertProductDto productDto);
 
-    List<ProductListDto> selectProductList(SearchConditionDto searchConditionDto);
+    List<BaseProductDto> selectProductList(ProductSearchConditionDto productSearchConditionDto);
+
+    Integer selectProductTotalCount();
 
     ProductDetailDto selectProduct(int productId);
-
-    int selectProductListCount(SearchConditionDto searchConditionDto);
 
     void updateProduct(@Param("productId") int productId,
             @Param("UpdateProductDto") UpdateProductDto productDto);

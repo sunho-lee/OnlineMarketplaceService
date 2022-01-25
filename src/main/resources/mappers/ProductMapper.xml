@@ -14,59 +14,73 @@
             #{detailedImage1}, #{detailedImage2}, #{detailedImage3});
   </insert>
 
-  <select id="selectProductList" parameterType="SearchConditionDto" resultType="ProductListDto">
-    SELECT product_id AS productId,
-    product_name AS productName,
-    category_id AS categoryId,
-    tag,
-    price,
-    reg_dt AS registerDate,
-    main_img AS mainImg
-    FROM smartstore_db.product
+  <resultMap id="productList" type="BaseProductDto"
+    autoMapping="true">
+      <id property="productId" column="id" javaType="Long"/>
+      <id property="sellerId" column="seller_id" javaType="Long"/>
+      <result property="nickname" column="nickname"/>
+      <result property="title" column="title"/>
+      <result property="price" column="price"/>
+      <result property="shippingFee" column="shipping_fee"/>
+      <result property="categoryId" column="category_id"/>
+      <result property="categoryName" column="name"/>
+      <result property="amount" column="amount"/>
+      <result property="mainImage" column="main_image"/>
+  </resultMap>
+
+  <select id="selectProductList"
+    parameterType="com.project.onlinemarketplaceservice.pagination.ProductSearchConditionDto"
+    resultMap="productList">
+    SELECT
+    SQL_CALC_FOUND_ROWS
+    p.id,
+    p.seller_id,
+    s.nickname,
+    p.title,
+    p.price,
+    p.shipping_fee,
+    p.category_id,
+    c.name,
+    p.amount,
+    P.main_image
+    FROM marketplace.product p
+    JOIN category c ON p.category_id = c.id
+    JOIN seller s ON p.seller_id = s.id
     <where>
       <if test="categoryId != null">
-        category_id = #{categoryId}
+        p.category_id = #{categoryId}
       </if>
       <if test="searchKeyword != null">
-        AND (product_name LIKE CONCAT('%',#{searchKeyword},'%')
-        OR tag LIKE CONCAT('%',#{searchKeyword},'%'))
+        p.title LIKE CONCAT('%',#{searchKeyword},'%')
       </if>
     </where>
     ORDER BY
     <choose>
-      <when test="sort == 'date'">reg_dt DESC</when>
+      <when test="sort == 'date'">published_at DESC</when>
       <when test="sort == 'price_asc'">price</when>
       <when test="sort == 'price_desc'">price DESC</when>
     </choose>
-    LIMIT #{pagingOffsetDto.offsetNum}, #{pagingOffsetDto.recordCountPerPage};
+    LIMIT #{recordCountPerPage} OFFSET #{offsetNum};
   </select>
 
-  <select id="selectProductListCount" parameterType="SearchConditionDto" resultType="_int">
-    SELECT COUNT(*)
-    FROM smartstore_db.product
-    <where>
-      <if test="categoryId != null">
-        category_id = #{categoryId}
-      </if>
-      <if test="searchKeyword != null">
-        AND (product_name LIKE CONCAT('%',#{searchKeyword},'%')
-        OR tag LIKE CONCAT('%',#{searchKeyword},'%'))
-      </if>
-    </where>
+  <select id="selectProductTotalCount" resultType="Integer">
+    SELECT COUNT(*) FROM marketplace.product;
   </select>
 
   <resultMap id="productDetail" type="ProductDetailDto">
-    <id property="productId" column="id"/>
-    <id property="description" column="description"/>
-    <id property="detailedImage1" column="detailed_image1"/>
-    <id property="detailedImage2" column="detailed_image2"/>
-    <id property="detailedImage3" column="detailed_image3"/>
-    <id property="publishedAt" column="publishedAt"/>
+    <result property="description" column="description"/>
+    <result property="detailedImage1" column="detailed_image1"/>
+    <result property="detailedImage2" column="detailed_image2"/>
+    <result property="detailedImage3" column="detailed_image3"/>
+    <result property="publishedAt" column="published_at"/>
     <association property="baseProductDto" javaType="BaseProductDto">
-      <result property="sellerId" column="seller_id"/>
+      <id property="productId" column="id" javaType="Long"/>
+      <id property="sellerId" column="seller_id" javaType="Long"/>
+      <result property="nickname" column="nickname"/>
       <result property="title" column="title"/>
       <result property="price" column="price"/>
       <result property="shippingFee" column="shipping_fee"/>
+      <result property="categoryId" column="category_id"/>
       <result property="categoryName" column="name"/>
       <result property="amount" column="amount"/>
       <result property="mainImage" column="main_image"/>
@@ -76,9 +90,11 @@
   <select id="selectProduct" parameterType="int" resultMap="productDetail">
     SELECT p.id,
            p.seller_id,
+           s.nickname,
            p.title,
            p.price,
            p.shipping_fee,
+           p.category_id,
            c.name,
            p.amount,
            p.description,
@@ -86,9 +102,10 @@
            p.detailed_image1,
            p.detailed_image2,
            p.detailed_image3,
-           p.publishedAt
+           p.published_at
     FROM marketplace.product p
            JOIN category c ON p.category_id = c.id
+           JOIN seller s ON p.seller_id = s.id
     WHERE p.id = #{productId};
   </select>
 
