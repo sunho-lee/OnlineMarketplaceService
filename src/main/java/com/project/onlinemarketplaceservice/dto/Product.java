@@ -1,5 +1,6 @@
 package com.project.onlinemarketplaceservice.dto;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseProductDto {
+public class Product {
 
     private Long productId;
     private Long sellerId;
@@ -21,5 +22,6 @@ public class BaseProductDto {
     private String categoryName;
     private Integer amount;
     private String mainImage;
+    private LocalDateTime publishedAt;
 
 }

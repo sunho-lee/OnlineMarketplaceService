@@ -1,6 +1,5 @@
 package com.project.onlinemarketplaceservice.dto;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductDetailDto {
 
-    private BaseProductDto baseProductDto;
+    private Product product;
     private String description;
     private String detailedImage1;
     private String detailedImage2;
     private String detailedImage3;
-    private LocalDateTime publishedAt;
 
 }

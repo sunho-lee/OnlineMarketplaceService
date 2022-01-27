@@ -1,17 +1,19 @@
 package com.project.onlinemarketplaceservice.service;
 
 import com.project.onlinemarketplaceservice.constants.CacheNameConstants;
-import com.project.onlinemarketplaceservice.dto.BaseProductDto;
 import com.project.onlinemarketplaceservice.dto.InsertProductDto;
+import com.project.onlinemarketplaceservice.dto.Product;
 import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
+import com.project.onlinemarketplaceservice.dto.ProductSearch;
 import com.project.onlinemarketplaceservice.dto.UpdateProductDto;
 import com.project.onlinemarketplaceservice.mapper.ProductMapper;
-import com.project.onlinemarketplaceservice.pagination.PaginationProductListDto;
-import com.project.onlinemarketplaceservice.pagination.ProductSearchConditionDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -25,14 +27,11 @@ public class ProductService {
         productMapper.insertProduct(productDto);
     }
 
-    public PaginationProductListDto getProductList(
-            ProductSearchConditionDto productSearchConditionDto) {
-        List<BaseProductDto> productList = productMapper.selectProductList(
-                productSearchConditionDto);
-        Integer totalCount = productMapper.selectProductTotalCount();
-        return new PaginationProductListDto(totalCount, productList,
-                productSearchConditionDto.getRecordCountPerPage(),
-                productSearchConditionDto.getCurrentPageNum());
+    public Page<Product> getProductList(ProductSearch productSearch, Pageable pageable) {
+        List<Product> productList = productMapper.selectProductList(productSearch, pageable);
+        long totalCount = productMapper.selectProductTotalCount(productSearch);
+        return new PageImpl<>(productList, pageable, totalCount);
+
     }
 
     @Cacheable(value = CacheNameConstants.PRODUCT, key = "#productId")
