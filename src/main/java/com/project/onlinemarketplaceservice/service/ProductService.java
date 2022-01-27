@@ -1,15 +1,19 @@
 package com.project.onlinemarketplaceservice.service;
 
 import com.project.onlinemarketplaceservice.constants.CacheNameConstants;
-import com.project.onlinemarketplaceservice.dto.ProductDto;
-import com.project.onlinemarketplaceservice.dto.ProductListDto;
-import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
+import com.project.onlinemarketplaceservice.dto.InsertProductDto;
+import com.project.onlinemarketplaceservice.dto.Product;
+import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
+import com.project.onlinemarketplaceservice.dto.ProductSearch;
+import com.project.onlinemarketplaceservice.dto.UpdateProductDto;
 import com.project.onlinemarketplaceservice.mapper.ProductMapper;
-import com.project.onlinemarketplaceservice.paging.PaginationListDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -19,31 +23,28 @@ public class ProductService {
 
     private final ProductMapper productMapper;
 
-    public void addProductInStore(ProductDto productDto) {
+    public void addProductInStore(InsertProductDto productDto) {
         productMapper.insertProduct(productDto);
     }
 
-    public PaginationListDto getProductList(SearchConditionDto searchConditionDto) {
-        List<ProductListDto> productListDto = productMapper.selectProductList(searchConditionDto);
-        int totalRecordCount = getProductListCount(searchConditionDto);
-        return new PaginationListDto(totalRecordCount, productListDto);
+    public Page<Product> getProductList(ProductSearch productSearch, Pageable pageable) {
+        List<Product> productList = productMapper.selectProductList(productSearch, pageable);
+        long totalCount = productMapper.selectProductTotalCount(productSearch);
+        return new PageImpl<>(productList, pageable, totalCount);
+
     }
 
     @Cacheable(value = CacheNameConstants.PRODUCT, key = "#productId")
-    public ProductDto getProduct(int productId) {
+    public ProductDetailDto getProduct(int productId) {
         return productMapper.selectProduct(productId);
     }
 
-    private int getProductListCount(SearchConditionDto searchConditionDto) {
-        return productMapper.selectProductListCount(searchConditionDto);
-    }
-
-    @CachePut(value = CacheNameConstants.PRODUCT, key = "#productId")
-    public void modifyProduct(int productId, ProductDto productDto) {
+    @CachePut(value = CacheNameConstants.PRODUCT, key = "#productId", unless = "#result == null")
+    public void modifyProduct(int productId, UpdateProductDto productDto) {
         productMapper.updateProduct(productId, productDto);
     }
 
-    public void deleteProduct(int storeId, int productId) {
-        productMapper.deleteProduct(storeId, productId);
+    public void deleteProduct(int productId) {
+        productMapper.deleteProduct(productId);
     }
 }

@@ -1,25 +1,31 @@
 package com.project.onlinemarketplaceservice.mapper;
 
-import com.project.onlinemarketplaceservice.dto.ProductDto;
-import com.project.onlinemarketplaceservice.dto.ProductListDto;
-import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
+import com.project.onlinemarketplaceservice.dto.InsertProductDto;
+import com.project.onlinemarketplaceservice.dto.Product;
+import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
+import com.project.onlinemarketplaceservice.dto.ProductSearch;
+import com.project.onlinemarketplaceservice.dto.UpdateProductDto;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Pageable;
 
 @Mapper
 public interface ProductMapper {
 
-    void insertProduct(ProductDto productDto);
+    void insertProduct(InsertProductDto productDto);
 
-    List<ProductListDto> selectProductList(SearchConditionDto searchConditionDto);
+    List<Product> selectProductList(@Param("search") ProductSearch productSearch,
+            @Param("pageable") Pageable pageable);
 
-    ProductDto selectProduct(int productId);
+    Long selectProductTotalCount(@Param("search") ProductSearch productSearch);
 
-    int selectProductListCount(SearchConditionDto searchConditionDto);
+    ProductDetailDto selectProduct(int productId);
 
-    int updateProduct(@Param("productId") int productId,
-            @Param("ProductDto") ProductDto productDto);
+    void updateProduct(@Param("productId") int productId,
+            @Param("UpdateProductDto") UpdateProductDto productDto);
 
-    void deleteProduct(@Param("storeId") int storeId, @Param("productId") int productId);
+    void deleteProduct(@Param("productId") int productId);
+
+
 }

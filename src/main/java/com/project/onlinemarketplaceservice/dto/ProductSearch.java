@@ -1,21 +1,16 @@
 package com.project.onlinemarketplaceservice.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class SearchConditionDto {
+@NoArgsConstructor
+public class ProductSearch {
 
     private Integer categoryId;
+    private String keyword;
+    private Long sellerId;
 
-    private String searchKeyword;
-
-    private String sort;
-
-    private PagingOffsetDto pagingOffsetDto;
 }

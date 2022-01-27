@@ -4,89 +4,128 @@
 
 <mapper namespace="com.project.onlinemarketplaceservice.mapper.ProductMapper">
 
-  <insert id="insertProduct" parameterType="ProductDto">
-    INSERT INTO product (product_name, category_id, tag, price, amount, main_img,
-                         detail_img, description, store_id)
-    VALUES (#{name}, #{category}, #{tag}, #{price}, #{amount}, #{mainImage}, #{detailImage},
-            #{description},
-            #{storeId});
+  <insert id="insertProduct" parameterType="InsertProductDto">
+    INSERT INTO product (seller_id, title, price, shipping_fee, category_id, amount, description,
+                         main_image, detailed_image1, detailed_image2, detailed_image3)
+    VALUES (#{sellerId}, #{title}, #{price},
+            #{shippingFee},
+            #{categoryId}, #{amount}, #{description},
+            #{mainImage},
+            #{detailedImage1}, #{detailedImage2}, #{detailedImage3});
   </insert>
 
-  <select id="selectProductList" parameterType="SearchConditionDto" resultType="ProductListDto">
-    SELECT product_id AS productId,
-    product_name AS productName,
-    category_id AS categoryId,
-    tag,
-    price,
-    reg_dt AS registerDate,
-    main_img AS mainImg
-    FROM smartstore_db.product
-    <where>
-      <if test="categoryId != null">
-        category_id = #{categoryId}
-      </if>
-      <if test="searchKeyword != null">
-        AND (product_name LIKE CONCAT('%',#{searchKeyword},'%')
-        OR tag LIKE CONCAT('%',#{searchKeyword},'%'))
-      </if>
-    </where>
-    ORDER BY
-    <choose>
-      <when test="sort == 'date'">reg_dt DESC</when>
-      <when test="sort == 'price_asc'">price</when>
-      <when test="sort == 'price_desc'">price DESC</when>
-    </choose>
-    LIMIT #{pagingOffsetDto.offsetNum}, #{pagingOffsetDto.recordCountPerPage};
+  <select id="selectProductList"
+    resultType="com.project.onlinemarketplaceservice.dto.Product">
+    SELECT
+    p.id AS productId,
+    p.seller_id AS sellerId,
+    s.nickname,
+    p.title,
+    p.price,
+    p.shipping_fee AS shippingFee,
+    p.category_id AS categoryId,
+    c.name AS categoryName,
+    p.amount,
+    P.main_image AS mainImage,
+    p.published_at AS publishedAt
+    FROM marketplace.product p
+    JOIN category c ON p.category_id = c.id
+    JOIN seller s ON p.seller_id = s.id
+    <include refid="selectProductListAndCountWhereStatement"/>
+    <if test="pageable.sort.sorted">
+      <trim prefix="order by">
+        <foreach item="order" index="i" collection="pageable.sort">
+          <choose>
+            <when test="order.property == 'price'">price ${order.direction}</when>
+            <when test="order.property == 'publishedAt'">published_at ${order.direction}</when>
+          </choose>
+        </foreach>
+      </trim>
+    </if>
+    LIMIT #{pageable.pageSize} OFFSET #{pageable.offset};
   </select>
 
-  <select id="selectProductListCount" parameterType="SearchConditionDto" resultType="_int">
+  <select id="selectProductTotalCount" resultType="Long">
     SELECT COUNT(*)
-    FROM smartstore_db.product
-    <where>
-      <if test="categoryId != null">
-        category_id = #{categoryId}
-      </if>
-      <if test="searchKeyword != null">
-        AND (product_name LIKE CONCAT('%',#{searchKeyword},'%')
-        OR tag LIKE CONCAT('%',#{searchKeyword},'%'))
-      </if>
-    </where>
+    FROM marketplace.product p
+    <include refid="selectProductListAndCountWhereStatement"/>
   </select>
 
-  <select id="selectProduct" parameterType="int" resultType="ProductDto">
-    SELECT product_name AS name,
-           category_id  AS category,
-           tag,
-           price,
-           amount,
-           main_img     AS mainImage,
-           detail_img   AS detailImage,
-           description,
-           reg_dt       AS registerDate,
-           store_id     AS storeId
-    FROM smartstore_db.product
-    WHERE product_id = #{productId};
+  <sql id="selectProductListAndCountWhereStatement">
+    <where>
+      <if test="search.categoryId != null">
+        AND p.category_id = #{search.categoryId}
+      </if>
+      <if test="search.keyword != null">
+        AND p.title LIKE CONCAT('%',#{search.keyword},'%')
+      </if>
+      <if test="search.sellerId != null">
+        AND p.seller_id = #{search.sellerId}
+      </if>
+    </where>
+  </sql>
+
+  <resultMap id="productDetail" type="ProductDetailDto">
+    <result property="description" column="description"/>
+    <result property="detailedImage1" column="detailed_image1"/>
+    <result property="detailedImage2" column="detailed_image2"/>
+    <result property="detailedImage3" column="detailed_image3"/>
+    <association property="product" javaType="Product">
+      <id property="productId" column="id" javaType="Long"/>
+      <id property="sellerId" column="seller_id" javaType="Long"/>
+      <result property="nickname" column="nickname"/>
+      <result property="title" column="title"/>
+      <result property="price" column="price"/>
+      <result property="shippingFee" column="shipping_fee"/>
+      <result property="categoryId" column="category_id"/>
+      <result property="categoryName" column="name"/>
+      <result property="amount" column="amount"/>
+      <result property="mainImage" column="main_image"/>
+      <result property="publishedAt" column="published_at"/>
+    </association>
+  </resultMap>
+
+  <select id="selectProduct" parameterType="int" resultMap="productDetail">
+    SELECT p.id,
+           p.seller_id,
+           s.nickname,
+           p.title,
+           p.price,
+           p.shipping_fee,
+           p.category_id,
+           c.name,
+           p.amount,
+           p.description,
+           p.main_image,
+           p.detailed_image1,
+           p.detailed_image2,
+           p.detailed_image3,
+           p.published_at
+    FROM marketplace.product p
+           JOIN category c ON p.category_id = c.id
+           JOIN seller s ON p.seller_id = s.id
+    WHERE p.id = #{productId};
   </select>
 
   <update id="updateProduct">
-    UPDATE smartstore_db.product
-    SET product_name = #{ProductDto.name},
-        category_id  = #{ProductDto.category},
-        tag          = #{ProductDto.tag},
-        price        = #{ProductDto.price},
-        amount       = #{ProductDto.amount},
-        main_img     = #{ProductDto.mainImage},
-        detail_img   = #{ProductDto.detailImage},
-        description  = #{ProductDto.description}
-    WHERE product_id = #{productId}
-    AND store_id = #{ProductDto.storeId};
+    UPDATE marketplace.product
+    SET title           = #{UpdateProductDto.title},
+        price           = #{UpdateProductDto.price},
+        shipping_fee    = #{UpdateProductDto.shippingFee},
+        category_id     = #{UpdateProductDto.categoryId},
+        amount          = #{UpdateProductDto.amount},
+        description     = #{UpdateProductDto.description},
+        main_image      = #{UpdateProductDto.mainImage},
+        detailed_image1 = #{UpdateProductDto.detailedImage1},
+        detailed_image2 = #{UpdateProductDto.detailedImage2},
+        detailed_image3 = #{UpdateProductDto.detailedImage3}
+    WHERE id = #{productId};
   </update>
 
   <delete id="deleteProduct">
     DELETE
-    from smartstore_db.product
-    WHERE product_id = #{productId}
-    AND store_id = #{storeId};
+    from marketplace.product
+    WHERE id = #{productId};
   </delete>
 
 </mapper>

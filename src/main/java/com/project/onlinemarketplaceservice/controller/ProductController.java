@@ -1,13 +1,18 @@
 package com.project.onlinemarketplaceservice.controller;
 
 import com.project.onlinemarketplaceservice.constants.CacheNameConstants;
-import com.project.onlinemarketplaceservice.dto.PagingOffsetDto;
-import com.project.onlinemarketplaceservice.dto.ProductDto;
-import com.project.onlinemarketplaceservice.dto.SearchConditionDto;
-import com.project.onlinemarketplaceservice.paging.PaginationListDto;
+import com.project.onlinemarketplaceservice.dto.InsertProductDto;
+import com.project.onlinemarketplaceservice.dto.Product;
+import com.project.onlinemarketplaceservice.dto.ProductDetailDto;
+import com.project.onlinemarketplaceservice.dto.ProductSearch;
+import com.project.onlinemarketplaceservice.dto.UpdateProductDto;
 import com.project.onlinemarketplaceservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,34 +31,35 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public void addProductInStore(@RequestBody ProductDto productDto) {
+    public void addProductInStore(@RequestBody InsertProductDto productDto) {
         productService.addProductInStore(productDto);
     }
 
     @GetMapping
-    public PaginationListDto getProductList(
+    public Page<Product> getProductList(
             @RequestParam(value = "cateId", required = false) Integer categoryId,
             @RequestParam(value = "keyword", required = false) String searchKeyword,
-            @RequestParam(value = "sort", defaultValue = "date") String sort,
-            @RequestParam(value = "pagingIndex", defaultValue = "1") Integer pagingIndex,
-            @RequestParam(value = "pagingSize", defaultValue = "40") Integer pagingSize) {
-        return productService.getProductList(new SearchConditionDto(categoryId, searchKeyword, sort,
-                new PagingOffsetDto(pagingIndex, pagingSize)));
+            @RequestParam(value = "sellerId", required = false) Long sellerId,
+            @PageableDefault(page = 1, size = 40, sort = "publishedAt",
+                    direction = Sort.Direction.DESC) Pageable pageable) {
+        return productService
+                .getProductList(new ProductSearch(categoryId, searchKeyword, sellerId), pageable);
     }
 
     @GetMapping("/{productId}")
-    public ProductDto getProduct(@PathVariable("productId") int productId) {
+    public ProductDetailDto getProduct(@PathVariable("productId") int productId) {
         return productService.getProduct(productId);
     }
 
     @PutMapping("/{productId}")
-    public void modifyProduct(@PathVariable int productId, @RequestBody ProductDto productDto) {
+    public void modifyProduct(@PathVariable int productId,
+            @RequestBody UpdateProductDto productDto) {
         productService.modifyProduct(productId, productDto);
     }
 
     @CacheEvict(value = CacheNameConstants.PRODUCT, key = "#productId")
-    @DeleteMapping("/{storeId}/{productId}")
-    public void deleteProduct(@PathVariable int storeId, @PathVariable int productId) {
-        productService.deleteProduct(storeId, productId);
+    @DeleteMapping("/{productId}")
+    public void deleteProduct(@PathVariable int productId) {
+        productService.deleteProduct(productId);
     }
 }

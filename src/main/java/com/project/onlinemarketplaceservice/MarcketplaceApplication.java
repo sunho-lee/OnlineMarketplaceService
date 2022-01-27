@@ -4,11 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SmartStoreApplication {
+public class MarcketplaceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SmartStoreApplication.class, args);
-
-
+        SpringApplication.run(MarcketplaceApplication.class, args);
     }
 }
