@@ -11,7 +11,7 @@
 * 모든 기능 구현은 트레이드오프를 고려하여 상황에 맞게 결정한다.
 
 ## 개발 포스팅
-* [Offset 기반 Pagination 구현](https://betterdev.tistory.com/17)
+* [Pagination이란 (페이징 처리) - Offset vs Cursor(https://betterdev.tistory.com/17)
 * [대용량 트래픽에도 끄떡없는 서버 확장 방법](https://betterdev.tistory.com/6)
 * [분산 서버에 부하를 고르게 분산하는 방법](https://betterdev.tistory.com/7)
 * [오픈 마켓 서비스 데이터베이스 스키마 설계하기](https://betterdev.tistory.com/14)
